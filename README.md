@@ -18,7 +18,7 @@ what is converted and what isn't: [thp8_levels/README.md](thp8_levels/README.md)
 
 Each pinned to a tagged commit in package.json (`git+https://git@github.com/...#<commit>`; one copy of each: every repository that uses one pins the same commit):
 
-- [thug2-level-converter-core](https://github.com/CanuckAussieKev/thug2-level-converter-core): THUG2's formats (scenes, collision, textures, archives, scripts), the level port's common steps and the THUGPRO compatibility register.
+- [thug2-level-converter-core](https://github.com/CanuckAussieKev/thug2-level-converter-core): THUG2's formats (scenes, collision, textures, archives, scripts), the level port's common steps.
 - [thug2-thaw-level-converter](https://github.com/CanuckAussieKev/thug2-thaw-level-converter): Project 8 is built on THAW's formats - its QB node arrays and level scripts are THAW's form, so this converter reads them with that converter's `thaw/` readers and ports the scripts with its `thaw_scripts.ts`.
 
 Used by: Proving Ground is built on Project 8's engine: [thug2-thpg-level-converter](https://github.com/CanuckAussieKev/thug2-thpg-level-converter) runs `thp8/thp8_levels.ts` with its own game profile and readers. The content pipeline's loading pictures read Project 8's archives with `thp8/thp8.ts`.
@@ -64,4 +64,4 @@ Checks: `npm run typecheck`, `npm run lint`, `npm test` (the tests that need a g
 
 ## Versions
 
-Releases are tagged `v<major>.<minor>.<patch>`; this is `v1.0.0`. The repositories that use it pin the tagged commit.
+Releases are tagged `v<major>.<minor>.<patch>`; this is `v1.0.1` (core v2.0.0, THAW's converter v1.1.0). The repositories that use it pin the tagged commit.
