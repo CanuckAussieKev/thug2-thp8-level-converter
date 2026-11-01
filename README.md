@@ -68,4 +68,4 @@ Checks: `npm run typecheck`, `npm run lint`, `npm test` (the tests that need a g
 
 ## Versions
 
-Releases are tagged `v<major>.<minor>.<patch>`; this is `v1.1.1` (core v3.1.0: runs on Linux and macOS with the same output as on Windows; CI on all three); `v1.1.0` (ns found or fetched without the decomp, output folder checked; core v3.0.0); `v1.0.1` (core v2.0.0, THAW's converter v1.1.0). The repositories that use it pin the tagged commit.
+Releases are tagged `v<major>.<minor>.<patch>`; this is `v1.2.0` (paths written with / (path.join) instead of pyJoin and \-strings; core v4.0.0); `v1.1.1` (core v3.1.0: runs on Linux and macOS with the same output as on Windows; CI on all three); `v1.1.0` (ns found or fetched without the decomp, output folder checked; core v3.0.0); `v1.0.1` (core v2.0.0, THAW's converter v1.1.0). The repositories that use it pin the tagged commit.
