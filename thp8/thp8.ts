@@ -17,7 +17,7 @@ import * as fs from "node:fs";
 import * as zlib from "node:zlib";
 import { FormatError } from "thug2-level-converter-core/level_port/binio.ts";
 import { checksum } from "thug2-level-converter-core/level_port/qb.ts";
-import { decodeLatin1, pyStrip } from "thug2-level-converter-core/lib/py.ts";
+import { decodeLatin1, stripSpace } from "thug2-level-converter-core/lib/text.ts";
 
 const hex = (n: number): string => n.toString(16).toUpperCase().padStart(8, "0");
 
@@ -167,7 +167,7 @@ export function loadNames(dbgPak: string): Map<number, string> {
     const pak = openPak(dbgPak);
     for (const e of pak.entries) {
         for (const match of decodeLatin1(entryData(pak, e)).matchAll(NAME_LINE)) {
-            const text = pyStrip(match[2]!);
+            const text = stripSpace(match[2]!);
             const value = Number.parseInt(match[1]!, 16);
             if (names.has(value)) continue;
             let ok = false;

@@ -8,9 +8,8 @@
 //
 // Default: all fifteen levels (a material counted once per level).
 
-import { parseCli } from "thug2-level-converter-core/lib/cli.ts";
+import { isMain, parseCli, print } from "thug2-level-converter-core/lib/cli.ts";
 import { findCaseless } from "thug2-level-converter-core/lib/install.ts";
-import { isMain, print } from "thug2-level-converter-core/lib/py.ts";
 import * as geom from "../thp8/geom.ts";
 import * as mats from "../thp8/materials.ts";
 import { levelParts, templateNames } from "../thp8/render_audit.ts";

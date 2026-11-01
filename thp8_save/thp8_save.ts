@@ -7,8 +7,7 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { helpFromHeader } from "thug2-level-converter-core/lib/cli.ts";
-import { isMain } from "thug2-level-converter-core/lib/py.ts";
+import { helpFromHeader, isMain } from "thug2-level-converter-core/lib/cli.ts";
 import { type GameData, loadGameData } from "./game_data.ts";
 import { MAX_CHANGES, maxSave } from "./max.ts";
 import {

@@ -30,10 +30,10 @@ import * as thug2Col from "thug2-level-converter-core/level_port/thug2_col.ts";
 import { makeMaterial, THUG2_TERRAIN_TYPES } from "thug2-level-converter-core/level_port/thug2_material.ts";
 import * as thug2Scene from "thug2-level-converter-core/level_port/thug2_scene.ts";
 import { trisToStrip } from "thug2-level-converter-core/level_port/tri_strip.ts";
-import { parseCli } from "thug2-level-converter-core/lib/cli.ts";
+import { exitWith, isMain, parseCli, print, runMain } from "thug2-level-converter-core/lib/cli.ts";
 import { findCaseless, resolveInstall } from "thug2-level-converter-core/lib/install.ts";
 import { requireNs } from "thug2-level-converter-core/lib/neverscript.ts";
-import { Float, isMain, print, pyExit, pyMinBy, runMain } from "thug2-level-converter-core/lib/py.ts";
+import { Float, minBy } from "thug2-level-converter-core/lib/numbers.ts";
 import { applyNodeFlags, nodeFlagScript } from "thug2-thaw-level-converter/thaw/node_flags.ts";
 import * as thaw from "thug2-thaw-level-converter/thaw/thaw.ts";
 import * as thawScripts from "thug2-thaw-level-converter/thaw/thaw_scripts.ts";
@@ -196,7 +196,7 @@ export function findZone(name: string): ZoneInfo | undefined {
 export function compressedFolder(thp8Root: string): string {
     const root = resolveInstall(thp8Root, game.install);
     const found = findCaseless(root, "DATA", "COMPRESSED");
-    if (found === null) pyExit(`${root}: no DATA\\COMPRESSED`);
+    if (found === null) exitWith(`${root}: no DATA\\COMPRESSED`);
     return found;
 }
 
@@ -317,7 +317,7 @@ export function nonStoryNodeFlags(compressed: string, names: Map<number, string>
         const q = new thaw.QbItems(thp8.entryData(pak, e), "qb.pak", names, ">");
         if (q.scriptData.has(key)) return nodeFlagScript(q.scriptData, key, "qb.pak.xen");
     }
-    pyExit(`qb.pak.xen: no ${NODEFLAG_SCRIPT}`);
+    exitWith(`qb.pak.xen: no ${NODEFLAG_SCRIPT}`);
 }
 
 // The zones' time-of-day settings (qb.pak's `<zone>_tod_manager` structures; `Default_TOD_Manager` for zones without
@@ -450,7 +450,7 @@ export function terrainTable(compressed: string, names: Map<number, string>): st
             return c instanceof Name ? (names.get(c.value) ?? "").replace(/^TERRAIN_/i, "").toUpperCase() : "";
         });
     }
-    pyExit("qb.pak.xen: no terrain_types");
+    exitWith("qb.pak.xen: no terrain_types");
 }
 
 export function thug2Terrain(table: readonly string[], index: number): number {
@@ -2266,7 +2266,7 @@ export function convertCollision(
                         }),
                 );
                 const volume = inside.length
-                    ? pyMinBy(inside, (v) => Math.hypot(...[0, 1, 2].map((k) => v.pos[k]! - middle[k]!)))
+                    ? minBy(inside, (v) => Math.hypot(...[0, 1, 2].map((k) => v.pos[k]! - middle[k]!)))
                     : undefined;
                 if (owner !== undefined && !used.has(owner)) name = owner;
                 else if (volume !== undefined) name = volume.name;
@@ -2654,7 +2654,7 @@ export function movePositions(array: readonly QbValue[], shift: readonly number[
 export function nodeArrayOf(nqb: thaw.QbItems, zone: string): QbValue[] {
     const key = checksum(`${zone}_NodeArray`);
     const raw = nqb.globals.find(([n]) => n.value === key)?.[1];
-    if (!Array.isArray(raw)) pyExit(`${zone}: no ${zone}_NodeArray`);
+    if (!Array.isArray(raw)) exitWith(`${zone}: no ${zone}_NodeArray`);
     return nodes.expandIncludes(raw, new Map(nqb.globals.map(([k, v]) => [k.value, v])));
 }
 
@@ -2810,7 +2810,7 @@ export function zoneNodes(
             }
             for (const [t] of scriptPort.plainTokens(code)) {
                 if (t >= 0x4a)
-                    pyExit(`${level}: script ${names.get(script) ?? thp8.hex(script)}: token 0x${t.toString(16)}`);
+                    exitWith(`${level}: script ${names.get(script) ?? thp8.hex(script)}: token 0x${t.toString(16)}`);
             }
         }
     }
@@ -2979,7 +2979,7 @@ export function networkAreas(compressed: string, names: Map<number, string>): Ne
 
 export function readNetworkAreas(globals: ReadonlyMap<number, QbValue>, names: ReadonlyMap<number, string>): NetArea[] {
     const list = globals.get(checksum(NET_LEVEL_LIST));
-    if (!Array.isArray(list)) pyExit(`qb.pak: no ${NET_LEVEL_LIST}`);
+    if (!Array.isArray(list)) exitWith(`qb.pak: no ${NET_LEVEL_LIST}`);
     const name = (v: QbValue | undefined): string =>
         v instanceof Name ? (names.get(v.value) ?? thp8.hex(v.value)) : "";
     const text = (v: QbValue | undefined): string => (v instanceof qb.Local ? v.text : typeof v === "string" ? v : "");
@@ -4346,7 +4346,7 @@ export function cmdConvert(args: Args): number {
     for (const name of args.levels.length ? args.levels : specs.map((s) => s.level)) {
         const spec = findSpec(specs, name);
         if (spec === undefined)
-            pyExit(`${name}: not a ${game.label} zone or network level (${specs.map((s) => s.level).join(", ")})`);
+            exitWith(`${name}: not a ${game.label} zone or network level (${specs.map((s) => s.level).join(", ")})`);
         wanted.push(spec);
     }
     const library = findCaseless(compressed, "FXFILES", "MaterialLibrary.bin.xen");
@@ -4555,7 +4555,7 @@ export function parseCommandLine(argv: readonly string[]): Args {
     const command = positionals[0];
     if (command !== "convert" && command !== "selfcheck" && command !== "list") {
         process.stderr.write(`${USAGE}\nerror: the command is convert, selfcheck or list\n`);
-        pyExit(2);
+        exitWith(2);
     }
     return {
         command,

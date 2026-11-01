@@ -33,9 +33,8 @@ import * as tex from "thug2-level-converter-core/level_port/tex.ts";
 import * as textureCheck from "thug2-level-converter-core/level_port/texture_check.ts";
 import * as thug2Scene from "thug2-level-converter-core/level_port/thug2_scene.ts";
 import * as zfight from "thug2-level-converter-core/level_port/zfight.ts";
-import { parseCli } from "thug2-level-converter-core/lib/cli.ts";
+import { exitWith, isMain, parseCli, print, runMain } from "thug2-level-converter-core/lib/cli.ts";
 import { findCaseless, resolveInstall } from "thug2-level-converter-core/lib/install.ts";
-import { isMain, print, pyExit, runMain } from "thug2-level-converter-core/lib/py.ts";
 import * as thaw from "thug2-thaw-level-converter/thaw/thaw.ts";
 import * as dxt from "./dxt.ts";
 import * as geom from "./geom.ts";
@@ -654,9 +653,9 @@ export function main(argv: readonly string[] = process.argv.slice(2)): number {
             .split(",")
             .map(Number);
         if (!spec || at.length < 3 || at.some((x) => !Number.isFinite(x)))
-            pyExit(`${USAGE}\nerror: spot <level> <x,y,z>`);
+            exitWith(`${USAGE}\nerror: spot <level> <x,y,z>`);
         const staged = readStaged(staging, spec.level);
-        if (!staged) pyExit(`${spec.level}: not converted in ${staging}`);
+        if (!staged) exitWith(`${spec.level}: not converted in ${staging}`);
         const parts = levelParts(spec, compressed, names);
         print(spotReport(spec.level, staged, parts, names, templates, at, Number(radius ?? 60)).join("\n"));
         return 0;
@@ -668,7 +667,7 @@ export function main(argv: readonly string[] = process.argv.slice(2)): number {
     ];
     const wanted = rest.length
         ? rest.map(
-              (n) => findSpec(specs, n) ?? pyExit(`${n}: not a THP8 level (${specs.map((s) => s.level).join(", ")})`),
+              (n) => findSpec(specs, n) ?? exitWith(`${n}: not a THP8 level (${specs.map((s) => s.level).join(", ")})`),
           )
         : ordered;
     if (command === "black") {

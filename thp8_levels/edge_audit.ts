@@ -15,8 +15,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as thug2Col from "thug2-level-converter-core/level_port/thug2_col.ts";
-import { parseCli } from "thug2-level-converter-core/lib/cli.ts";
-import { isMain, print, runMain } from "thug2-level-converter-core/lib/py.ts";
+import { isMain, parseCli, print, runMain } from "thug2-level-converter-core/lib/cli.ts";
 
 export const CELL = 24; // inches
 export const GROUND_NORMAL = 0.7;

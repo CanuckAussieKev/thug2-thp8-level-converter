@@ -9,9 +9,8 @@
 // Default: all fifteen levels (a material counted once per level). With --examples the first N sector names of each
 // template's solid materials that have a soft or cut-out alpha are listed (the ones to look at).
 
-import { parseCli } from "thug2-level-converter-core/lib/cli.ts";
+import { isMain, parseCli, print } from "thug2-level-converter-core/lib/cli.ts";
 import { findCaseless } from "thug2-level-converter-core/lib/install.ts";
-import { isMain, print } from "thug2-level-converter-core/lib/py.ts";
 import * as dxt from "../thp8/dxt.ts";
 import * as mats from "../thp8/materials.ts";
 import { levelParts, templateNames } from "../thp8/render_audit.ts";
