@@ -5,7 +5,7 @@
 //   node thp8_levels/thp8_levels.ts convert [levels...] [--thp8 C:\Games\THP8] [--thug2 C:\Games\THUG2]
 //   node thp8_levels/thp8_levels.ts selfcheck | list
 
-import { isMain, runMain } from "../lib/py.ts";
-import { main } from "../thp8/thp8_levels.ts";
+import { isMain, runMain } from "thug2-level-converter-core/lib/py.ts";
+import { main } from "thug2-level-converter-core/thp8/thp8_levels.ts";
 
 if (isMain(import.meta.url)) await runMain(() => main());

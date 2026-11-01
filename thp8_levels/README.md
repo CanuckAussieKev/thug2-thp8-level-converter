@@ -8,9 +8,9 @@ Nothing of either game is in the repo: the files are made from your copies each 
 ## Running it
 
 Needs Node 24+ (`npm install` once), NeverScript (`tools\build_neverscript.ps1` ->
-`out\neverscript\ns.exe`) and, to install the levels, tools/pipeline/menu_level/make_menu_level.ts.
+`out\neverscript\ns.exe`) and, to install the levels, thug2-content-pipeline/menu_level/make_menu_level.ts.
 
-    node tools/pipeline/thp8_levels/thp8_levels.ts convert [levels...] [--thp8 C:\Games\THP8] [--thug2 C:\Games\THUG2]
+    node thp8_levels/thp8_levels.ts convert [levels...] [--thp8 C:\Games\THP8] [--thug2 C:\Games\THUG2]
     node tools/pipeline/menu_level/make_menu_level.ts [--game C:\Games\THUG2]
 
 `convert` writes `<thug2>\thug2-decomp-thp8\` (not read by the game): `levels\thp8_<level>\thp8_<level>.scn.xbx /
@@ -23,8 +23,8 @@ entries; make_menu_level makes the overlay again from the staging folders, so th
 mip levels (faster). `make_menu_level.ts` then copies them into the data overlay and adds them to Levels.qb and the
 level select.
 
-    node tools/pipeline/thp8_levels/thp8_levels.ts selfcheck
-    node tools/pipeline/thp8_levels/thp8_levels.ts list
+    node thp8_levels/thp8_levels.ts selfcheck
+    node thp8_levels/thp8_levels.ts list
 
 `selfcheck` reads every file of every zone archive (scenes and their strips, textures' base levels untiled,
 collision, qb / node arrays) and round-trips THUG2's LA / TestLevel files; `list` shows the levels (what each is made
@@ -64,14 +64,14 @@ its entry gets IsBigLevel (whole units - src/game/net/thugpro_compat.h). It need
 (src/game/core/memory_sizes.h: the node name hash, the rail table, the script heap, the pools) - with the original's
 sizes (`[memory] original_sizes=1`) it can't load. It takes ~7 minutes to load in the Debug build.
 
-The sign texts are THP8's; the pictograms are ours (tools/pipeline/menu_level/level_select_icons.ts, THP8_LEVELS in
+The sign texts are THP8's; the pictograms are ours (thug2-content-pipeline/menu_level/level_select_icons.ts, THP8_LEVELS in
 level_select.ts).
 
 ## Render audit (z-fighting, missing textures)
 
-    node tools/pipeline/thp8_levels/render_audit.ts textures [levels...] [--top N]
-    node tools/pipeline/thp8_levels/render_audit.ts zfight [levels...] [--top N] [--csv FILE] [--tolerance IN] [--view M]
-    node tools/pipeline/thp8_levels/render_audit.ts spot <level> "(x, y, z)" [radius]
+    node tools/pipeline/run.ts thp8/render_audit.ts textures [levels...] [--top N]
+    node tools/pipeline/run.ts thp8/render_audit.ts zfight [levels...] [--top N] [--csv FILE] [--tolerance IN] [--view M]
+    node tools/pipeline/run.ts thp8/render_audit.ts spot <level> "(x, y, z)" [radius]
     (all: [--thp8 C:\Games\THP8] [--thug2 C:\Games\THUG2 | --staging <folder>]; levels as convert names them, the
     default all, BEAVER VALLEY first; writes nothing)
 
@@ -81,7 +81,7 @@ the material lists a real texture, a material with nothing but blanks, a layer d
 (a blended base; a second mask with uvs of its own), a texture not in the zone's .tex (and where it is), a format not
 converted, other textures of templates whose passes aren't read (environment / refraction maps) - by cause, shader
 template and texture, with area and a spot; then the converted files as THUG2 sees them
-(tools/pipeline/level_port/texture_check.ts). `zfight` runs tools/pipeline/level_port/zfight.ts over the level's .scn.xbx with THP8's
+(thug2-level-converter-core/level_port/texture_check.ts). `zfight` runs thug2-level-converter-core/level_port/zfight.ts over the level's .scn.xbx with THP8's
 sector names and why each pair overlaps: our own stand-ins / barrier veils, two zones drawing the same thing, THP8's
 decals (their depth bias isn't converted), see-through layers, duplicates in one zone (objects in their own space -
 moving objects, props - are left out: the game places them). `spot` lists the meshes at a place (a screenshot
@@ -167,7 +167,7 @@ sector then gets - `vertexNormals`): a 2D map made from the cube (`sphereMap`, t
 the library's `m_optimizedVector0`) clamped to 0..1 x the mask map's mean brightness (the texture after the cube) x 0.5,
 rounded to 0.1 - a moderate fixed strength, THP8's shader formula not read; none under 0.05 (RemapX ~ 0 or a black mask) or
 for an alpha-tested material. Water: a flat body colour (the mean of the two colour float4s) under a reflection of
-0.5. `node tools/pipeline/thp8_levels/env_census.ts [levels...]` counts them per level.
+0.5. `node thp8_levels/env_census.ts [levels...]` counts them per level.
 
 **Seam walls.** Each zone's collision has invisible walls (every face 0x1000, most also 0x80 - the camera passes)
 along its edges where the next zone begins (z_houses: a 115 m long, 70 m high plane at x = 0, where z_shops starts).
@@ -234,7 +234,7 @@ public descriptions of the Xbox 360's texture fetch constant / tiling and of Hav
   circle - 8 sides, more for a big radius so the flats stay within an inch of it, up to 64: BEAVER VALLEY's skatepark
   bowl floor, a cylinder 8.8 m across, was an inscribed octagon 26 inches short of the bowl at every flat until
   2026-10-25), named after its sector (or its primitives' node); face flags as THP8's
-  (trigger faces only on kill zones), terrains mapped to THUG2's nearest. `node tools/pipeline/thp8_levels/hole_audit.ts [levels
+  (trigger faces only on kill zones), terrains mapped to THUG2's nearest. `node tools/pipeline/run.ts thp8/hole_audit.ts [levels
   | file.col.xbx] [--staging DIR]` lists slits of missing floor between two pieces of ground at one height (the
   convert report gives the count per level); `edge_audit.ts` the floor edges with nothing beyond.
 - Nodes (level_port's static path): restarts, rails (with their Links and TerrainTypes), level geometry, kill zones
@@ -255,7 +255,7 @@ public descriptions of the Xbox 360's texture fetch constant / tiling and of Hav
   map x 4 alone. Lit triangles are split where the maps vary
   inside them (materials.refine: the shadows keep their shape), within a budget (half as many triangles again or
   40,000 more, at most 190,000 a zone). THUG2's level lights (skater, objects) from the zone's tod_manager.
-- Scripts (phase 2, tools/pipeline/thaw_levels/thaw_scripts.ts's translator - THP8's scripts are THAW's token stream): the
+- Scripts (phase 2, thug2-level-converter-core/thaw/thaw_scripts.ts's translator - THP8's scripts are THAW's token stream): the
   geometry's and rails' trigger scripts and everything they call, from the zone's own qbs, its sub-zones' and the
   other zones' (a gap may end in the next zone's script) - the **gaps** (StartGap / EndGap, their names as THP8's
   English text); statements THUG2 hasn't left out (goals, chalk gaps, sounds, particles, cameras). Kill zones also

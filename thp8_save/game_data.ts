@@ -1,12 +1,12 @@
-// What tools/pipeline/thp8_save takes from THP8's own data (C:\Games\THP8\game\DATA, read only): the checksum names
+// What thp8_save takes from THP8's own data (C:\Games\THP8\game\DATA, read only): the checksum names
 // (PAK\dbg.pak.xen), qb.pak's globals and scripts (the save writer's name tables, the career's atoms, goals, flags,
 // shop lists, stat thresholds) and cas.pak's globals (the CAS parts' unlock flags).
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { checksum, Name, type QbValue, Struct } from "../level_port/qb.ts";
-import * as thaw from "../thaw/thaw.ts";
-import * as thp8 from "../thp8/thp8.ts";
+import { checksum, Name, type QbValue, Struct } from "thug2-level-converter-core/level_port/qb.ts";
+import * as thaw from "thug2-level-converter-core/thaw/thaw.ts";
+import * as thp8 from "thug2-level-converter-core/thp8/thp8.ts";
 import type { NameTables } from "./save.ts";
 
 export interface GameData {

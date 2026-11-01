@@ -3,9 +3,9 @@
 
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import type * as thug2Col from "../level_port/thug2_col.ts";
-import * as edges from "../thp8/edges.ts";
-import type * as havok from "../thp8/havok.ts";
+import type * as thug2Col from "thug2-level-converter-core/level_port/thug2_col.ts";
+import * as edges from "thug2-level-converter-core/thp8/edges.ts";
+import type * as havok from "thug2-level-converter-core/thp8/havok.ts";
 import { audit } from "./edge_audit.ts";
 
 // A flat ground strip: `cells` squares of one metre along x from x0, z 0..1, at height y.

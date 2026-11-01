@@ -4,18 +4,18 @@
 // (and their strengths), the ones left without (an alpha-tested cut-out, a reflectivity under ENV_MIN: RemapX ~ 0 or a
 // black mask) and water, with the surface they cover. Reads only; writes nothing.
 //
-//   node tools/pipeline/thp8_levels/env_census.ts [levels...] [--thp8 C:\Games\THP8]
+//   node thp8_levels/env_census.ts [levels...] [--thp8 C:\Games\THP8]
 //
 // Default: all fifteen levels (a material counted once per level).
 
-import { parseCli } from "../lib/cli.ts";
-import { findCaseless } from "../lib/install.ts";
-import { isMain, print } from "../lib/py.ts";
-import * as geom from "../thp8/geom.ts";
-import * as mats from "../thp8/materials.ts";
-import { levelParts, templateNames } from "../thp8/render_audit.ts";
-import * as thp8 from "../thp8/thp8.ts";
-import { allSpecs, compressedFolder, findSpec } from "../thp8/thp8_levels.ts";
+import { parseCli } from "thug2-level-converter-core/lib/cli.ts";
+import { findCaseless } from "thug2-level-converter-core/lib/install.ts";
+import { isMain, print } from "thug2-level-converter-core/lib/py.ts";
+import * as geom from "thug2-level-converter-core/thp8/geom.ts";
+import * as mats from "thug2-level-converter-core/thp8/materials.ts";
+import { levelParts, templateNames } from "thug2-level-converter-core/thp8/render_audit.ts";
+import * as thp8 from "thug2-level-converter-core/thp8/thp8.ts";
+import { allSpecs, compressedFolder, findSpec } from "thug2-level-converter-core/thp8/thp8_levels.ts";
 
 export interface EnvRow {
     candidates: number; // materials of a reflective template with a cube map in their list

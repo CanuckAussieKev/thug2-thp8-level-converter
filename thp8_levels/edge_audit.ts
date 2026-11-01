@@ -3,7 +3,7 @@
 // feet under the skater: put him back, negate his velocity - src/game/skater/collision_events.h) bounces him from nothing.
 // The user met one at SKATE & FUN PARKS' east edge (2026-10-24).
 //
-//   node tools/pipeline/thp8_levels/edge_audit.ts [levels...] [--staging DIR] [--top N]
+//   node thp8_levels/edge_audit.ts [levels...] [--staging DIR] [--top N]
 //
 // Levels are THP8 level names (thp8_net_skatefunparks, net_skatefunparks, skatefunparks; default every network level in
 // the staging folder). Ground: upward collidable faces (normal y >= GROUND_NORMAL), by CELL-inch cells with their heights.
@@ -14,9 +14,9 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import * as thug2Col from "../level_port/thug2_col.ts";
-import { parseCli } from "../lib/cli.ts";
-import { isMain, print, runMain } from "../lib/py.ts";
+import * as thug2Col from "thug2-level-converter-core/level_port/thug2_col.ts";
+import { parseCli } from "thug2-level-converter-core/lib/cli.ts";
+import { isMain, print, runMain } from "thug2-level-converter-core/lib/py.ts";
 
 export const CELL = 24; // inches
 export const GROUND_NORMAL = 0.7;

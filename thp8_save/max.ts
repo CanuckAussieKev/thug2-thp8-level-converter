@@ -3,8 +3,8 @@
 // set, gaps got, secret spots found, the shop's items bought, the stats' records past their last threshold, stokens
 // and goal points up. Everything is derived from THP8's own data (game_data.ts).
 
-import { checksum, Name, type QbValue, Struct } from "../level_port/qb.ts";
-import * as thaw from "../thaw/thaw.ts";
+import { checksum, Name, type QbValue, Struct } from "thug2-level-converter-core/level_port/qb.ts";
+import * as thaw from "thug2-level-converter-core/thaw/thaw.ts";
 import type { GameData } from "./game_data.ts";
 import { type Component, type SaveFile, type SaveStruct, T_FLOAT, T_NAME, type Value } from "./save.ts";
 

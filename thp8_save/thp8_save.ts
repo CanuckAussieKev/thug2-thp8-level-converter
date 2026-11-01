@@ -1,13 +1,13 @@
 // Tony Hawk's Project 8 (Xbox 360, Project8Recomp) save files: dump them, max them out. Format: save.ts; what "max"
 // sets: max.ts.
 //
-//   node tools/pipeline/thp8_save/thp8_save.ts dump <skater-progress> [--thp8 C:\Games\THP8]
-//   node tools/pipeline/thp8_save/thp8_save.ts max <in> <out> [--thp8 C:\Games\THP8]
-//   node tools/pipeline/thp8_save/thp8_save.ts diff <a> <b> [--thp8 C:\Games\THP8]
+//   node thp8_save/thp8_save.ts dump <skater-progress> [--thp8 C:\Games\THP8]
+//   node thp8_save/thp8_save.ts max <in> <out> [--thp8 C:\Games\THP8]
+//   node thp8_save/thp8_save.ts diff <a> <b> [--thp8 C:\Games\THP8]
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { helpFromHeader } from "../lib/cli.ts";
+import { helpFromHeader } from "thug2-level-converter-core/lib/cli.ts";
 import { type GameData, loadGameData } from "./game_data.ts";
 import { MAX_CHANGES, maxSave } from "./max.ts";
 import {

@@ -1,9 +1,9 @@
-// NOT ORIGINAL - tests of tools/pipeline/thp8_save on synthetic saves (no game data, no user save): the structure format's
+// NOT ORIGINAL - tests of thp8_save on synthetic saves (no game data, no user save): the structure format's
 // types and name tables, the header's checksums, the writer's integer forms, the flag words, the tree diff.
 
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { checksum } from "../level_port/qb.ts";
+import { checksum } from "thug2-level-converter-core/level_port/qb.ts";
 import { getFlag, MAX_CHANGES, setFlag } from "./max.ts";
 import {
     crc32,
