@@ -14,6 +14,7 @@
 // middle of its collision is at the origin.
 
 import * as fs from "node:fs";
+import * as path from "node:path";
 import * as common from "thug2-level-converter-core/level_port/common.ts";
 import * as geometry from "thug2-level-converter-core/level_port/geometry.ts";
 import * as nodes from "thug2-level-converter-core/level_port/nodes.ts";
@@ -32,7 +33,7 @@ import { trisToStrip } from "thug2-level-converter-core/level_port/tri_strip.ts"
 import { parseCli } from "thug2-level-converter-core/lib/cli.ts";
 import { findCaseless, resolveInstall } from "thug2-level-converter-core/lib/install.ts";
 import { requireNs } from "thug2-level-converter-core/lib/neverscript.ts";
-import { Float, isMain, print, pyExit, pyJoin, pyMinBy, runMain } from "thug2-level-converter-core/lib/py.ts";
+import { Float, isMain, print, pyExit, pyMinBy, runMain } from "thug2-level-converter-core/lib/py.ts";
 import { applyNodeFlags, nodeFlagScript } from "thug2-thaw-level-converter/thaw/node_flags.ts";
 import * as thaw from "thug2-thaw-level-converter/thaw/thaw.ts";
 import * as thawScripts from "thug2-thaw-level-converter/thaw/thaw_scripts.ts";
@@ -4229,7 +4230,7 @@ function convertLevel(spec: LevelSpec, ctx: Shared): Record<string, unknown> | n
         if (leafMost(o.bsp) > LEAF_MOST)
             warnings.push(`collision object ${thp8.hex(o.checksum)}: a BSP leaf of more than ${LEAF_MOST} faces`);
     }
-    const levelDir = pyJoin(ctx.out, "levels", name);
+    const levelDir = path.join(ctx.out, "levels", name);
     common.writeLevel(levelDir, name, done.scene, done.textures, col.col);
     common.reportLevel(report, name, done.scene, done.textures, col.col, [...new Set(warnings)].sort());
     const c = done.counts;
@@ -4250,7 +4251,7 @@ function convertLevel(spec: LevelSpec, ctx: Shared): Record<string, unknown> | n
             `${parts.reduce((n, p) => n + p.hidden.size, 0)} not made; moved by (${shift.map((x) => x.toFixed(1)).join(", ")}); ` +
             `reaches ${reach.toFixed(0)} units from the middle${big ? " (IsBigLevel: network positions in whole units)" : ""}`,
     );
-    const qbFile = pyJoin(levelDir, `${name}.qb`);
+    const qbFile = path.join(levelDir, `${name}.qb`);
     // restarts: THP8's network spawns usable in single play too (soloRestarts); against the collision just made -
     // restarts over nothing / a kill zone are no network spawns, kills go to grounded ones (nodes.groundRestarts);
     // network games' needs (nodes.netGameNodes: Player1 restarts as spawns where a zone has none)
@@ -4313,7 +4314,7 @@ export function findSpec(specs: readonly LevelSpec[], name: string): LevelSpec |
 // levels.json without the entries of levels this converter no longer makes (RETIRED, or not in `specs` at all), and
 // their staging folders deleted. Returns their names.
 export function pruneStaging(out: string, specs: readonly LevelSpec[]): string[] {
-    const file = pyJoin(out, portedLevels.MANIFEST);
+    const file = path.join(out, portedLevels.MANIFEST);
     const made = new Set(specs.map((x) => x.level.toLowerCase()));
     const old = portedLevels.readManifest(file);
     const gone = new Set<string>(game.retired);
@@ -4323,7 +4324,7 @@ export function pruneStaging(out: string, specs: readonly LevelSpec[]): string[]
     }
     const removed: string[] = [];
     for (const level of gone) {
-        const dir = pyJoin(out, "levels", level);
+        const dir = path.join(out, "levels", level);
         const listed = (old?.levels ?? []).some((e) => String(e.level).toLowerCase() === level);
         if (fs.existsSync(dir) || listed) removed.push(level);
         fs.rmSync(dir, { recursive: true, force: true });
@@ -4337,7 +4338,7 @@ export function pruneStaging(out: string, specs: readonly LevelSpec[]): string[]
 
 export function cmdConvert(args: Args): number {
     const compressed = compressedFolder(args.thp8);
-    const out = args.out || pyJoin(args.thug2, game.staging);
+    const out = args.out || path.join(args.thug2, game.staging);
     args.ns = requireNs(args.ns); // (--ns, NEVERSCRIPT, ... or `npx thug2-neverscript fetch` - lib/neverscript.ts)
     const names = thp8.loadNames(findCaseless(compressed, "PAK", "dbg.pak.xen")!);
     const specs = (game.specs ?? allSpecs)(compressed, names);
@@ -4356,7 +4357,7 @@ export function cmdConvert(args: Args): number {
     // (only the levels converted now are made again: a partial convert keeps the others, as levels.json does -
     // ported_levels.writeManifest)
     for (const spec of wanted)
-        fs.rmSync(pyJoin(out, "levels", spec.level), {
+        fs.rmSync(path.join(out, "levels", spec.level), {
             recursive: true,
             force: true,
         });
@@ -4391,7 +4392,7 @@ export function cmdConvert(args: Args): number {
         // (the report as it goes: the whole town takes minutes)
         print(report.splice(0).join("\n"));
     }
-    portedLevels.writeManifest(pyJoin(out, portedLevels.MANIFEST), manifest);
+    portedLevels.writeManifest(path.join(out, portedLevels.MANIFEST), manifest);
     if (pruned.length) print(`removed (no longer made): ${pruned.join(", ")}`);
     print(`wrote ${out} (${manifest.levels.length} levels)`);
     print(staging.installHint(out));
@@ -4453,7 +4454,7 @@ export function convertSky(
         mips,
         SKY_UNIT,
     );
-    common.writeLevel(pyJoin(out, "levels", skyName()), skyName(), done.scene, done.textures, null);
+    common.writeLevel(path.join(out, "levels", skyName()), skyName(), done.scene, done.textures, null);
     common.reportLevel(report, skyName(), done.scene, done.textures, null, [...new Set(warnings)].sort());
     return skyName();
 }
@@ -4461,7 +4462,7 @@ export function convertSky(
 // Every zone archive: its scene, textures (base levels untiled), collision and qb files read; THUG2's LA / TestLevel
 // files round-trip (common.thug2RoundTrips).
 export function cmdSelfcheck(args: Args): number {
-    let [checked, failures] = common.thug2RoundTrips(pyJoin(args.thug2, "Data", "pre"), [
+    let [checked, failures] = common.thug2RoundTrips(path.join(args.thug2, "Data", "pre"), [
         "LAscn.prx",
         "LAcol.prx",
         "TestLevelscn.prx",
@@ -4474,10 +4475,11 @@ export function cmdSelfcheck(args: Args): number {
     const files = fs
         .readdirSync(zones)
         .filter((x) => /\.pak\.xen$/i.test(x))
-        .map((x) => pyJoin(zones, x));
+        .map((x) => path.join(zones, x));
     const skies = findCaseless(compressed, "SKIES");
     for (const d of skies ? fs.readdirSync(skies) : []) {
-        for (const x of fs.readdirSync(pyJoin(skies!, d))) if (/\.pak\.xen$/i.test(x)) files.push(pyJoin(skies!, d, x));
+        for (const x of fs.readdirSync(path.join(skies!, d)))
+            if (/\.pak\.xen$/i.test(x)) files.push(path.join(skies!, d, x));
     }
     files.push(findCaseless(compressed, "PAK", "qb.pak.xen")!);
     for (const file of files) {
