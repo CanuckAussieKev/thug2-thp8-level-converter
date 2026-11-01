@@ -8,6 +8,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { helpFromHeader } from "thug2-level-converter-core/lib/cli.ts";
+import { isMain } from "thug2-level-converter-core/lib/py.ts";
 import { type GameData, loadGameData } from "./game_data.ts";
 import { MAX_CHANGES, maxSave } from "./max.ts";
 import {
@@ -196,7 +197,7 @@ export function diffSaves(a: SaveFile, b: SaveFile, names: ReadonlyMap<number, s
     return out;
 }
 
-if (import.meta.main) {
+if (isMain(import.meta.url)) {
     helpFromHeader(import.meta.url);
     main(process.argv.slice(2));
 }

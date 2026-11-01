@@ -23,8 +23,8 @@
 // DiffuseTerrain_3Pass the float4s are the passes' colours (tints: 0.94, 0.89, 0.85 on the skate park's stairs); in
 // the specular / normal-mapped ones the first is the specular power (15, 0, 0, 0) and the second pass 0's colour.
 
-import { checksum } from "../level_port/qb.ts";
-import { lookOf } from "../level_port/texture_check.ts";
+import { checksum } from "thug2-level-converter-core/level_port/qb.ts";
+import { lookOf } from "thug2-level-converter-core/level_port/texture_check.ts";
 import * as dxt from "./dxt.ts";
 import type * as geom from "./geom.ts";
 import * as xenos from "./xenos.ts";

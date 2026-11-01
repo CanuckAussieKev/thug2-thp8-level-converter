@@ -11,19 +11,13 @@
 
 import { parseCli } from "thug2-level-converter-core/lib/cli.ts";
 import { findCaseless } from "thug2-level-converter-core/lib/install.ts";
-import { print } from "thug2-level-converter-core/lib/py.ts";
-import * as dxt from "thug2-level-converter-core/thp8/dxt.ts";
-import * as mats from "thug2-level-converter-core/thp8/materials.ts";
-import { levelParts, templateNames } from "thug2-level-converter-core/thp8/render_audit.ts";
-import * as thp8 from "thug2-level-converter-core/thp8/thp8.ts";
-import {
-    allSpecs,
-    baseTexture,
-    compressedFolder,
-    findSpec,
-    textureAlpha,
-} from "thug2-level-converter-core/thp8/thp8_levels.ts";
-import * as xenos from "thug2-level-converter-core/thp8/xenos.ts";
+import { isMain, print } from "thug2-level-converter-core/lib/py.ts";
+import * as dxt from "../thp8/dxt.ts";
+import * as mats from "../thp8/materials.ts";
+import { levelParts, templateNames } from "../thp8/render_audit.ts";
+import * as thp8 from "../thp8/thp8.ts";
+import { allSpecs, baseTexture, compressedFolder, findSpec, textureAlpha } from "../thp8/thp8_levels.ts";
+import * as xenos from "../thp8/xenos.ts";
 
 type Kind = "blend" | "add" | "test" | "nature" | "solid" | "unknown";
 
@@ -122,4 +116,4 @@ function main(): void {
     }
 }
 
-main();
+if (isMain(import.meta.url)) main();

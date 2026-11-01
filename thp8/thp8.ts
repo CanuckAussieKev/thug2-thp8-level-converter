@@ -15,9 +15,9 @@
 
 import * as fs from "node:fs";
 import * as zlib from "node:zlib";
-import { FormatError } from "../level_port/binio.ts";
-import { checksum } from "../level_port/qb.ts";
-import { decodeLatin1, pyStrip } from "../lib/py.ts";
+import { FormatError } from "thug2-level-converter-core/level_port/binio.ts";
+import { checksum } from "thug2-level-converter-core/level_port/qb.ts";
+import { decodeLatin1, pyStrip } from "thug2-level-converter-core/lib/py.ts";
 
 const hex = (n: number): string => n.toString(16).toUpperCase().padStart(8, "0");
 

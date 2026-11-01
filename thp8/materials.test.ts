@@ -4,7 +4,7 @@
 
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { checksum } from "../level_port/qb.ts";
+import { checksum } from "thug2-level-converter-core/level_port/qb.ts";
 import type * as geom from "./geom.ts";
 import * as mats from "./materials.ts";
 import * as xenos from "./xenos.ts";

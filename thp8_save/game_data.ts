@@ -5,8 +5,8 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { checksum, Name, type QbValue, Struct } from "thug2-level-converter-core/level_port/qb.ts";
-import * as thaw from "thug2-level-converter-core/thaw/thaw.ts";
-import * as thp8 from "thug2-level-converter-core/thp8/thp8.ts";
+import * as thaw from "thug2-thaw-level-converter/thaw/thaw.ts";
+import * as thp8 from "../thp8/thp8.ts";
 import type { NameTables } from "./save.ts";
 
 export interface GameData {

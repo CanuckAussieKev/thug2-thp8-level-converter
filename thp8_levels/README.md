@@ -255,7 +255,7 @@ public descriptions of the Xbox 360's texture fetch constant / tiling and of Hav
   map x 4 alone. Lit triangles are split where the maps vary
   inside them (materials.refine: the shadows keep their shape), within a budget (half as many triangles again or
   40,000 more, at most 190,000 a zone). THUG2's level lights (skater, objects) from the zone's tod_manager.
-- Scripts (phase 2, thug2-level-converter-core/thaw/thaw_scripts.ts's translator - THP8's scripts are THAW's token stream): the
+- Scripts (phase 2, thug2-thaw-level-converter/thaw/thaw_scripts.ts's translator - THP8's scripts are THAW's token stream): the
   geometry's and rails' trigger scripts and everything they call, from the zone's own qbs, its sub-zones' and the
   other zones' (a gap may end in the next zone's script) - the **gaps** (StartGap / EndGap, their names as THP8's
   English text); statements THUG2 hasn't left out (goals, chalk gaps, sounds, particles, cameras). Kill zones also

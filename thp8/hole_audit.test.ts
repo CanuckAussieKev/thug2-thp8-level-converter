@@ -4,7 +4,7 @@
 
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import type * as thug2Col from "../level_port/thug2_col.ts";
+import type * as thug2Col from "thug2-level-converter-core/level_port/thug2_col.ts";
 import * as havok from "./havok.ts";
 import { holeAudit } from "./hole_audit.ts";
 import { SCALE } from "./thp8_levels.ts";

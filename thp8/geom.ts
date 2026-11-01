@@ -18,7 +18,7 @@
 // uv pairs from the uv offset: one per 2-bit field of the layout's high half that is 2 (the lowest is the material's
 // first texture's). Indices: big-endian u16 triangle strips, 0x7FFF between strips? (see readIndices).
 
-import { FormatError } from "../level_port/binio.ts";
+import { FormatError } from "thug2-level-converter-core/level_port/binio.ts";
 
 const SCENE = 0xbabeface;
 export const MAT_SIZE = 0x134;

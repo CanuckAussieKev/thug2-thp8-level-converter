@@ -3,8 +3,8 @@
 
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import type * as thug2Scene from "../level_port/thug2_scene.ts";
-import type * as zfight from "../level_port/zfight.ts";
+import type * as thug2Scene from "thug2-level-converter-core/level_port/thug2_scene.ts";
+import type * as zfight from "thug2-level-converter-core/level_port/zfight.ts";
 import type * as geom from "./geom.ts";
 import type * as mats from "./materials.ts";
 import { type AuditPart, fightCause, layerDrops, materialOrigins, type Origin } from "./render_audit.ts";

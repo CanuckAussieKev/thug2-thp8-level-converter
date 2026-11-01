@@ -7,7 +7,7 @@
 // Here: the ground the skater can roll to from the level's own zones before a barrier or a drop stops him, and the other
 // zones' collision triangles over it, which convertLevel adds as collision (their drawn scenes stay the _lod stand-ins).
 
-import * as thug2Col from "../level_port/thug2_col.ts";
+import * as thug2Col from "thug2-level-converter-core/level_port/thug2_col.ts";
 import * as havok from "./havok.ts";
 import * as thp8 from "./thp8.ts";
 

@@ -19,7 +19,7 @@
 // defaults, attributes / flags. hkClassMember (0x14 bytes): name, class, enum, u8 type, u8 subtype, i16 C array
 // size, u16 flags, u16 offset. Member types (hkClassMember::Type, Havok 4.0): below (T).
 
-import { FormatError } from "../level_port/binio.ts";
+import { FormatError } from "thug2-level-converter-core/level_port/binio.ts";
 
 export const MAGIC = [0x57e0e057, 0x10c0c010];
 

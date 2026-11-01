@@ -4,9 +4,9 @@
 
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { checksum, Local, Name, type QbValue, Struct, Vector } from "../level_port/qb.ts";
-import { zfightGates } from "../level_port/zfight_gate.ts";
-import * as thaw from "../thaw/thaw.ts";
+import { checksum, Local, Name, type QbValue, Struct, Vector } from "thug2-level-converter-core/level_port/qb.ts";
+import { zfightGates } from "thug2-level-converter-core/level_port/zfight_gate.ts";
+import * as thaw from "thug2-thaw-level-converter/thaw/thaw.ts";
 import * as dxt from "./dxt.ts";
 import * as geom from "./geom.ts";
 import * as havok from "./havok.ts";

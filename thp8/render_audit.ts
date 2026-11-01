@@ -26,17 +26,17 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import * as blackCheck from "../level_port/black_check.ts";
-import { classOf as nodeClass } from "../level_port/nodes.ts";
-import { checksum, type QbValue, Struct } from "../level_port/qb.ts";
-import * as tex from "../level_port/tex.ts";
-import * as textureCheck from "../level_port/texture_check.ts";
-import * as thug2Scene from "../level_port/thug2_scene.ts";
-import * as zfight from "../level_port/zfight.ts";
-import { parseCli } from "../lib/cli.ts";
-import { findCaseless, resolveInstall } from "../lib/install.ts";
-import { isMain, print, pyExit, runMain } from "../lib/py.ts";
-import * as thaw from "../thaw/thaw.ts";
+import * as blackCheck from "thug2-level-converter-core/level_port/black_check.ts";
+import { classOf as nodeClass } from "thug2-level-converter-core/level_port/nodes.ts";
+import { checksum, type QbValue, Struct } from "thug2-level-converter-core/level_port/qb.ts";
+import * as tex from "thug2-level-converter-core/level_port/tex.ts";
+import * as textureCheck from "thug2-level-converter-core/level_port/texture_check.ts";
+import * as thug2Scene from "thug2-level-converter-core/level_port/thug2_scene.ts";
+import * as zfight from "thug2-level-converter-core/level_port/zfight.ts";
+import { parseCli } from "thug2-level-converter-core/lib/cli.ts";
+import { findCaseless, resolveInstall } from "thug2-level-converter-core/lib/install.ts";
+import { isMain, print, pyExit, runMain } from "thug2-level-converter-core/lib/py.ts";
+import * as thaw from "thug2-thaw-level-converter/thaw/thaw.ts";
 import * as dxt from "./dxt.ts";
 import * as geom from "./geom.ts";
 import * as mats from "./materials.ts";

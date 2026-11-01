@@ -6,6 +6,6 @@
 //   node thp8_levels/thp8_levels.ts selfcheck | list
 
 import { isMain, runMain } from "thug2-level-converter-core/lib/py.ts";
-import { main } from "thug2-level-converter-core/thp8/thp8_levels.ts";
+import { main } from "../thp8/thp8_levels.ts";
 
 if (isMain(import.meta.url)) await runMain(() => main());

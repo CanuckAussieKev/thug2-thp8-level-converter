@@ -15,8 +15,8 @@
 // 8:8:8:8. The base level is untiled into THUG2's linear DXT / 32-bit layout; the mip levels are made from it
 // (dxt.ts), not read (the Xbox packs its small levels into one tile).
 
-import { FormatError } from "../level_port/binio.ts";
-import type * as tex from "../level_port/tex.ts";
+import { FormatError } from "thug2-level-converter-core/level_port/binio.ts";
+import type * as tex from "thug2-level-converter-core/level_port/tex.ts";
 import * as dxt from "./dxt.ts";
 
 export const MAGIC = 0xfacecaa7;
