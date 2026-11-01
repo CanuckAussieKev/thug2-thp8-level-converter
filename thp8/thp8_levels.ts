@@ -23,6 +23,7 @@ import * as portedLevels from "thug2-level-converter-core/level_port/ported_leve
 import * as qb from "thug2-level-converter-core/level_port/qb.ts";
 import { checksum, Name, type QbValue, Struct, Vector } from "thug2-level-converter-core/level_port/qb.ts";
 import * as scriptPort from "thug2-level-converter-core/level_port/script_port.ts";
+import * as staging from "thug2-level-converter-core/level_port/staging.ts";
 import type * as tex from "thug2-level-converter-core/level_port/tex.ts";
 import * as thug2Col from "thug2-level-converter-core/level_port/thug2_col.ts";
 import { makeMaterial, THUG2_TERRAIN_TYPES } from "thug2-level-converter-core/level_port/thug2_material.ts";
@@ -30,6 +31,7 @@ import * as thug2Scene from "thug2-level-converter-core/level_port/thug2_scene.t
 import { trisToStrip } from "thug2-level-converter-core/level_port/tri_strip.ts";
 import { parseCli } from "thug2-level-converter-core/lib/cli.ts";
 import { findCaseless, resolveInstall } from "thug2-level-converter-core/lib/install.ts";
+import { requireNs } from "thug2-level-converter-core/lib/neverscript.ts";
 import { Float, isMain, print, pyExit, pyJoin, pyMinBy, runMain } from "thug2-level-converter-core/lib/py.ts";
 import { applyNodeFlags, nodeFlagScript } from "thug2-thaw-level-converter/thaw/node_flags.ts";
 import * as thaw from "thug2-thaw-level-converter/thaw/thaw.ts";
@@ -4336,7 +4338,7 @@ export function pruneStaging(out: string, specs: readonly LevelSpec[]): string[]
 export function cmdConvert(args: Args): number {
     const compressed = compressedFolder(args.thp8);
     const out = args.out || pyJoin(args.thug2, game.staging);
-    if (!fs.existsSync(args.ns)) pyExit(common.nsMissing(args.ns));
+    args.ns = requireNs(args.ns); // (--ns, NEVERSCRIPT, ... or `npx thug2-neverscript fetch` - lib/neverscript.ts)
     const names = thp8.loadNames(findCaseless(compressed, "PAK", "dbg.pak.xen")!);
     const specs = (game.specs ?? allSpecs)(compressed, names);
     const wanted: LevelSpec[] = [];
@@ -4349,6 +4351,8 @@ export function cmdConvert(args: Args): number {
     const library = findCaseless(compressed, "FXFILES", "MaterialLibrary.bin.xen");
     const globalPak = zonePak(compressed, "global");
     const nodeFlags = nonStoryNodeFlags(compressed, names);
+    // (never into a folder that isn't a converter's output - staging.ts)
+    staging.prepareStaging(out, false);
     // (only the levels converted now are made again: a partial convert keeps the others, as levels.json does -
     // ported_levels.writeManifest)
     for (const spec of wanted)
@@ -4389,9 +4393,8 @@ export function cmdConvert(args: Args): number {
     }
     portedLevels.writeManifest(pyJoin(out, portedLevels.MANIFEST), manifest);
     if (pruned.length) print(`removed (no longer made): ${pruned.join(", ")}`);
-    print(
-        `wrote ${out} (${manifest.levels.length} levels); install with tools\\pipeline\\menu_level\\make_menu_level.ts`,
-    );
+    print(`wrote ${out} (${manifest.levels.length} levels)`);
+    print(staging.installHint(out));
     return 0;
 }
 
@@ -4530,7 +4533,7 @@ const USAGE = `usage: thp8_levels.ts {convert,selfcheck,list} [zones ...] [--thu
   --thug2     THUG2's folder (default C:\\Games\\THUG2) - the install root or its Game folder
   --thp8      THP8's folder (default C:\\Games\\THP8) - holding game\\DATA\\COMPRESSED
   --out       where convert writes (default <thug2>\\${STAGING})
-  --ns        NeverScript's compiler (default out\\neverscript\\ns.exe)
+  --ns        NeverScript's ns (default: found - npx thug2-neverscript where / fetch)
   --no-mips   no mip levels (faster)
   --leave-out a regular expression: sectors whose names match are left out (scene and collision)`;
 
@@ -4558,7 +4561,7 @@ export function parseCommandLine(argv: readonly string[]): Args {
         thug2: values.thug2 ?? "C:\\Games\\THUG2",
         thp8: values.thp8 ?? "C:\\Games\\THP8",
         out: values.out ?? null,
-        ns: values.ns ?? common.NS,
+        ns: values.ns ?? "",
         noMips: values["no-mips"] ?? false,
         leaveOut: values["leave-out"] ? new RegExp(values["leave-out"], "i") : null,
     };

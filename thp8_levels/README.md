@@ -7,8 +7,7 @@ Nothing of either game is in the repo: the files are made from your copies each 
 
 ## Running it
 
-Needs Node 24+ (`npm install` once), NeverScript (`tools\build_neverscript.ps1` ->
-`out\neverscript\ns.exe`) and, to install the levels, thug2-content-pipeline/menu_level/make_menu_level.ts.
+Needs Node 24+ (`npm install` once), NeverScript's ns (`npx thug2-neverscript fetch`, or the decomp's `tools\build_neverscript.ps1`) and, to install the levels, thug2-content-pipeline/menu_level/make_menu_level.ts.
 
     node thp8_levels/thp8_levels.ts convert [levels...] [--thp8 C:\Games\THP8] [--thug2 C:\Games\THUG2]
     node tools/pipeline/menu_level/make_menu_level.ts [--game C:\Games\THUG2]
