@@ -1,6 +1,6 @@
 {
   "name": "thug2-thp8-level-converter",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "private": true,
   "type": "module",
   "description": "THUG2 THP8 Level Converter: Tony Hawk's Project 8 (Xbox 360) levels converted to Tony Hawk's Underground 2's formats.",
@@ -64,8 +64,8 @@
     "test": "node --test \"**/*.test.ts\""
   },
   "dependencies": {
-    "thug2-level-converter-core": "git+https://git@github.com/CanuckAussieKev/thug2-level-converter-core.git#f394e983eb339d3c782c7ced7b1bb8b3bbe43ef9",
-    "thug2-thaw-level-converter": "git+https://git@github.com/CanuckAussieKev/thug2-thaw-level-converter.git#bacb72c8d907d3fa449c92a8c84e7b6a2068859f"
+    "thug2-level-converter-core": "git+https://git@github.com/CanuckAussieKev/thug2-level-converter-core.git#0c5e0d77a97debf79558e36d2ff118fd6c2affeb",
+    "thug2-thaw-level-converter": "git+https://git@github.com/CanuckAussieKev/thug2-thaw-level-converter.git#7e399b2343d1556166c8106d28dc43d14397bb5c"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
